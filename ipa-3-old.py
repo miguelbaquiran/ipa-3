@@ -1,6 +1,131 @@
 #!/usr/bin/env python
 # coding: utf-8
 
+# In[10]:
+
+
+#SAMPLE DATA
+
+'''
+Sample data for Relationship Status below:
+'''
+
+social_graph = {
+    "@bongolpoc":{"first_name":"Joselito",
+                  "last_name":"Olpoc",
+                  "following":[
+                  ]
+    },
+    "@joaquin":  {"first_name":"Joaquin",
+                  "last_name":"Gonzales",
+                  "following":[
+                      "@chums","@jobenilagan"
+                  ]
+    },
+    "@chums" : {"first_name":"Matthew",
+                "last_name":"Uy",
+                "following":[
+                    "@bongolpoc","@miketan","@rudyang","@joeilagan"
+                ]
+    },
+    "@jobenilagan":{"first_name":"Joben",
+                   "last_name":"Ilagan",
+                   "following":[
+                    "@eeebeee","@joeilagan","@chums","@joaquin"
+                   ]
+    },
+    "@joeilagan":{"first_name":"Joe",
+                  "last_name":"Ilagan",
+                  "following":[
+                    "@eeebeee","@jobenilagan","@chums"
+                  ]
+    },
+    "@eeebeee":  {"first_name":"Elizabeth",
+                  "last_name":"Ilagan",
+                  "following":[
+                    "@jobenilagan","@joeilagan"
+                  ]
+    },
+}
+
+'''
+Sample data for Tic Tac Toe below:
+'''
+
+board1 = [
+['X','X','O'],
+['O','X','O'],
+['O','','X'],
+]
+
+board2 = [
+['X','X','O'],
+['O','X','O'],
+['','O','X'],
+]
+
+board3 = [
+['O','X','O'],
+['','O','X'],
+['X','X','O'],
+]
+
+board4 = [
+['X','X','X'],
+['O','X','O'],
+['O','','O'],
+]
+
+board5 = [
+['X','X','O'],
+['O','X','O'],
+['X','','O'],
+]
+
+board6 = [
+['X','X','O'],
+['O','X','O'],
+['X','',''],
+]
+
+board7 = [
+['X','X','O',''],
+['O','X','O','O'],
+['X','','','O'],
+['O','X','','']
+]
+
+'''
+Sample data for ETA below:
+
+(from_stop, to_stop)
+'''
+
+legs = {
+     ("upd","admu"):{
+         "travel_time_mins":10
+     },
+     ("admu","dlsu"):{
+         "travel_time_mins":35
+     },
+     ("dlsu","upd"):{
+         "travel_time_mins":55
+     }
+}
+
+legs = {
+    ('a1', 'a2'): {
+        'travel_time_mins': 10
+    },
+    ('a2', 'b1'): {
+        'travel_time_mins': 10230
+    },
+    ('b1', 'a1'): {
+        'travel_time_mins': 1
+    }
+}
+
+
 # In[17]:
 
 
@@ -208,36 +333,22 @@ def tic_tac_toe(board):
     #Displaying Winner
     
     if case1 == True:
-        if winner1 == ' ':
-            return "NO WINNER"
-        else:
-            return winner1
+        return winner1
     
     elif case2 == True:
-        if winner2 == ' ':
-            return "NO WINNER"
-        else:
-            return winner2
+        return winner2
     
     elif case3 == True:
-    
-        if board[0][0] == ' ':
-            return "NO WINNER"
-        else:
-            return board[0][0]
+        return board[0][0]
     
     elif case4 == True:
-
-        if board[0][amount_of_columns -1] == ' ':
-            return "NO WINNER"
-        else:
-            return board[0][amount_of_columns -1]
+        return board[0][amount_of_columns -1]
     
     else:
         return "NO WINNER"
 
 
-# In[102]:
+# In[21]:
 
 
 def eta(first_stop, second_stop, route_map):
@@ -270,21 +381,34 @@ def eta(first_stop, second_stop, route_map):
         the time it will take the shuttle to travel from first_stop to second_stop
     '''
 
+    
+    index_A = first_stop
     time_taken = 0
-
+    
     for element in route_map:
-        if first_stop in element[0]:
+        
+        if index_A in element[0]:
+            
             time_taken += route_map[element]["travel_time_mins"]
-            first_stop = element[1]
+            index_A = element[1]
+        
             if second_stop in element[1]:
                 break
-    else:
+            
+    
+    if index_A != second_stop:
+        
+        
         for element in route_map:
-            if first_stop in element[0]:
-                time_taken += route_map[element]["travel_time_mins"]
-                first_stop = element[1]
-                if second_stop in element[1]:
-                    break
+        
+            if index_A in element[0]:
 
+                time_taken += route_map[element]["travel_time_mins"]
+                index_A = element[1]
+
+            if second_stop in element[1]:
+                break
+
+            
     return time_taken
 
