@@ -85,7 +85,7 @@ def relationship_status(from_member, to_member, social_graph):
         return "followed by"
 
 
-# In[19]:
+# In[20]:
 
 
 def tic_tac_toe(board):
@@ -113,134 +113,55 @@ def tic_tac_toe(board):
         the symbol of the winner or "NO WINNER" if there is no winner
     '''
     
+    #Manual Methodology HWHADAHWDAHDWHA
+    #Make cases PER type of board! [BOARDS: 3x3, 4x4, 5x5, or 6x6], [CASES: horizontal, vert, diagonal (both ways), none]
+    
+    #Horizontal
+    for row in board:
+        if row == ['X', 'X', 'X'] or row == ['X', 'X', 'X','X'] or row == ['X', 'X', 'X', 'X', 'X'] or row == ['X', 'X', 'X', 'X', 'X', 'X']:
+            return "X"
+        elif row == ['O', 'O', 'O'] or row == ['O', 'O', 'O', 'O'] or row == ['O', 'O', 'O', 'O', 'O'] or row == ['O', 'O', 'O', 'O','O','O'] :
+            return "O"
 
-    amount_of_rows = len(board)
-    amount_of_columns = len(board[0])
-    
-    
-    #Case 1 - Horizontal
-    counter1 = 0
-    winner1 =''
-    
-    for row in range(amount_of_rows):
-        winnercounter1 = 0
-        
-        for column in range(1, amount_of_columns):
-            
-            #Checking if Any Line Contains a Win
-            if board[row][column] != board[row][column-1]:
-                counter1 += 1
-                break
-            
-            #Checking Which Line Contains a Win
-            elif board[row][column] == board[row][column-1]:
-                winnercounter1 +=1
-                
-            if winnercounter1 == amount_of_columns -1:
-                winner1 = board[row][0]
-                
-                
-        if counter1 < amount_of_rows:
-            case1 = True
-        else:
-            case1 = False
+    #Vertical
+    for col in range(len(board[0])):
+        if all(board[row][col] == 'X' for row in range(len(board))):
+            return "X"
+        elif all(board[row][col] == 'O' for row in range(len(board))):
+            return "O"
 
-    #Case 2 - Vertical
-    
-    counter2 = 0
-    winner2 = ''
-    
-    for column in range(amount_of_columns):
-        winnercounter2 = 0
-        
-        for row in range(1, amount_of_rows):
-            
-            #Checking if Any Line Contains a Win
-            if board[row][column] != board[row-1][column]:
-                counter2 += 1
-                break
-            
-            #Checking Which Line Contains a Win
-            elif board[row][column] == board[row-1][column]:
-                winnercounter2 +=1
-                
-            if winnercounter2 == amount_of_rows -1:
-                winner2 = board[0][column]                
-        
-        if counter2 < amount_of_columns:
-            case2 = True
-        else:
-            case2 = False
-            
-            
-    #Case 3 - Diagonal (Left to Right)
-    
-    counter3 = 0
-    for row in range(1, amount_of_rows):
-        
-        if board[row][row] != board[row-1][row-1]:
-            
-            counter3 += 1
-            break
-        
-    if counter3 == 1:
-        case3 = False
-    else:
-        case3 = True
-        
-        
-    #Case 4 - Diagonal (Right to Left)
+    #Diagonal (Case 1 [top left to bottom right] and 2 [top right to bottom left])
+    if len(board[0])==3:
+        if board[0][0] == board[1][1] == board[2][2] == 'X' or board[0][2] == board[1][1] == board[2][0] == 'X':
+            return "X"
+        elif board[0][0] == board[1][1] == board[2][2] == 'O' or board[0][2] == board[1][1] == board[2][0] == 'O':
+            return "O"
+    elif len(board[0])==4:
+        if board[0][0] == board[1][1] == board[2][2] == board[3][3]=='X' or board[0][3] == board[1][2] == board[2][1] == board[3][0]=='X':
+            return "X"
+        elif board[0][0] == board[1][1] == board[2][2] == board[3][3]=='O' or board[0][3] == board[1][2] == board[2][1] == board[3][0]=='O':
+            return "O"
+    elif len(board[0])==5:
+        if board[0][0] == board[1][1] == board[2][2] == board[3][3]==board[4][4]=='X' or board[0][4] == board[1][3] == board[2][2] == board[3][1]==board[4][0]=='X':
+            return "X"
+        elif board[0][0] == board[1][1] == board[2][2] == board[3][3]==board[4][4]=='O' or board[0][4] == board[1][3] == board[2][2] == board[3][1]==board[4][0]=='O':
+            return "O"
+    elif len(board[0])==6:
+        if board[0][0] == board[1][1] == board[2][2] == board[3][3]==board[4][4]==board[5][5]=='X' or board[0][5] == board[1][4] == board[2][3] == board[3][2]==board[4][1]==board[5][0]=='X':
+            return "X"
+        elif board[0][0] == board[1][1] == board[2][2] == board[3][3]==board[4][4]==board[5][5]=='O' or board[0][5] == board[1][4] == board[2][3] == board[3][2]==board[4][1]==board[5][0]=='O':
+            return "O"
 
-    counter4 = 0
-    
-    for row in range(1, amount_of_rows):
-        
-        if board[row][amount_of_columns - row -1] != board[row - 1][amount_of_columns - row]:
-            counter4 += 1
-            break
-
-    if counter4 == 1:
-        case4 = False
-    else:
-        case4 = True
-    
-    
-    #Displaying Winner
-    
-    if case1 == True:
-        if winner1 == ' ':
-            return "NO WINNER"
-        else:
-            return winner1
-    
-    elif case2 == True:
-        if winner2 == ' ':
-            return "NO WINNER"
-        else:
-            return winner2
-    
-    elif case3 == True:
-    
-        if board[0][0] == ' ':
-            return "NO WINNER"
-        else:
-            return board[0][0]
-    
-    elif case4 == True:
-
-        if board[0][amount_of_columns -1] == ' ':
-            return "NO WINNER"
-        else:
-            return board[0][amount_of_columns -1]
-    
-    else:
-        return "NO WINNER"
+    #WHEN nothing else works:
+    return "NO WINNER"
 
 
-# In[102]:
+# In[13]:
 
 
+#Trial 2
 def eta(first_stop, second_stop, route_map):
+
     '''ETA.
     25 points.
 
@@ -269,22 +190,45 @@ def eta(first_stop, second_stop, route_map):
     int
         the time it will take the shuttle to travel from first_stop to second_stop
     '''
+    
+    traveltime=0
+    new_map={}
+    index_start=0
+    index_end=0
+   
+    counter=0
+    for leg in route_map.keys():
+        counter+=1
+        
+        #Index of First Stop
+        if leg[0]==first_stop:
+            index_start+=counter
+            
+        #Index of Second Stop
+        if leg[1]==second_stop:
+            index_end+=counter
 
-    time_taken = 0
+    if index_start<=index_end:
+        routes = list(route_map.items())
+        subroute = routes[index_start - 1:index_end]
+        new_map.update(subroute)
 
-    for element in route_map:
-        if first_stop in element[0]:
-            time_taken += route_map[element]["travel_time_mins"]
-            first_stop = element[1]
-            if second_stop in element[1]:
-                break
-    else:
-        for element in route_map:
-            if first_stop in element[0]:
-                time_taken += route_map[element]["travel_time_mins"]
-                first_stop = element[1]
-                if second_stop in element[1]:
-                    break
+        for item in new_map.items():
+            mins = item[1]["travel_time_mins"]
+            traveltime += mins
 
-    return time_taken
+        return traveltime
+    elif index_start>index_end:
+        routes = list(route_map.items())
+        index_end=index_end+len(routes)
+        subroute = routes[index_start - 1:len(routes)]
+        new_map.update(subroute)
+        excess_subroute=routes[0:index_end-len(routes)]
+        new_map.update(excess_subroute)
+        
+        for item in new_map.items():
+            mins = item[1]["travel_time_mins"]
+            traveltime += mins
+            
+        return traveltime
 
